@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorControler');
@@ -19,6 +20,8 @@ const viewRouter = require('./routes/viewsRoutes');
 
 const app = express();
 
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -29,6 +32,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 1) GLOBAL MiddleWares
+// Implement CORS
+app.use(cors());
+// Access-Control-ALlow-Origin *
+
+app.options('*', cors());
+
 // Set Security HTTP headers
 app.use(helmet({ contentSecurityPolicy: false }));
 
