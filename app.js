@@ -29,8 +29,16 @@ app.set('views', path.join(__dirname, 'views'));
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// STRIPE WEBHOOK (must be before body parser)
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout,
+);
+
+// Body parser
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // 1) GLOBAL MiddleWares
 // Implement CORS
@@ -54,12 +62,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);
-
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout,
-);
 
 //  Body Parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
