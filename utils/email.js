@@ -10,7 +10,7 @@ module.exports = class Email {
     this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = process.env.EMAIL_FROM;
-  } 
+  }
 
   async send(template, subject) {
     try {
@@ -32,8 +32,6 @@ module.exports = class Email {
         html: html,
         text: htmlToText.convert(html),
       });
-
-      console.log('📧 Email sent:', result);
 
       return result;
     } catch (err) {

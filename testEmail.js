@@ -9,8 +9,6 @@ async function test() {
     subject: 'Test Email',
     html: '<h1>Hello</h1>',
   });
-
-  console.log(res);
 }
 
 test();

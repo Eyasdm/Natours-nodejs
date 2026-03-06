@@ -69,7 +69,6 @@ exports.aliasTopTours = (req, res, next) => {
 exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 
 exports.checkBody = (req, res, next) => {
-  console.log(req.body);
   if (!('name' in req.body) || !('price' in req.body)) {
     return res.status(400).json({
       status: 'fail',
