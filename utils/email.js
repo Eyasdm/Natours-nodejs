@@ -14,7 +14,7 @@ module.exports = class Email {
 
   async send(template, subject) {
     try {
-      // 1️⃣ Render HTML from pug template
+      // 1️ Render HTML from pug template
       const html = pug.renderFile(
         `${__dirname}/../views/email/${template}.pug`,
         {
@@ -24,7 +24,7 @@ module.exports = class Email {
         },
       );
 
-      // 2️⃣ Send email with Resend
+      // 2️ Send email with Resend
       const result = await resend.emails.send({
         from: this.from,
         to: this.to,
